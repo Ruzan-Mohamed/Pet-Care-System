@@ -14,8 +14,19 @@ namespace PawCare
         String^ reason;
         String^ status;
 
+        void validateId(int id, String^ fieldName);
+        void validateDateTime(String^ date, String^ time);
+
     public:
+        // Standard Appointment Lifecycle Statuses
+        literal String^ STATUS_BOOKED = "BOOKED";
+        literal String^ STATUS_CONFIRMED = "CONFIRMED";
+        literal String^ STATUS_COMPLETED = "COMPLETED";
+        literal String^ STATUS_CANCELLED = "CANCELLED";
+
         Appointment();
+        Appointment(int id, int pId, int vetId, String^ date, String^ time, String^ apptReason);
+        Appointment(int id, int pId, int vetId, String^ date, String^ time, String^ apptReason, String^ apptStatus);
 
         property int AppointmentID
         {
@@ -62,7 +73,17 @@ namespace PawCare
         void createAppointment();
         void updateAppointment(String^ date, String^ time, String^ newReason);
         void cancelAppointment();
+        void completeAppointment();
+        void confirmAppointment();
         void changeStatus(String^ newStatus);
+        void setPersistedStatus(String^ persistedStatus);
+        bool isModifiable();
         String^ displayAppointment();
+
+        static bool isValidDateFormat(String^ dateStr);
+        static bool isValidTimeFormat(String^ timeStr);
+        static bool isValidStatus(String^ statusStr);
+        static bool isValidTransition(String^ currentStatus, String^ newStatus);
     };
 }
+

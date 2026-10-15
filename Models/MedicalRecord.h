@@ -15,8 +15,12 @@ namespace PawCare
         String^ notes;
         String^ recordDate;
 
+        void validateId(int id, String^ fieldName);
+
     public:
         MedicalRecord();
+        MedicalRecord(int id, int apptId, int pId, String^ diag,
+                      String^ treat, String^ vacc, String^ note, String^ date);
 
         property int RecordID
         {
@@ -70,5 +74,8 @@ namespace PawCare
         void updateMedicalRecord(String^ newDiagnosis, String^ newTreatment,
                                  String^ newVaccination, String^ newNotes);
         String^ displayMedicalRecord();
+
+        static bool isValidDateFormat(String^ dateStr);
     };
 }
+

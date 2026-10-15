@@ -1,0 +1,27 @@
+# Visual Studio temporary & cache files
+.vs/
+x64/
+Debug/
+Release/
+*.obj
+*.ilk
+*.pdb
+*.tlog
+*.lastbuildstate
+*.idb
+*.ipch
+*.pch
+*.res
+*.log
+UpgradeLog.htm
+*.user
+
+# Executables generated locally
+*.exe
+
+# Exclude extracted NuGet package cache (keep packages/Dependencies and packages/MySql.Data)
+packages/*
+!packages/Dependencies/
+!packages/Dependencies/**
+!packages/MySql.Data/
+!packages/MySql.Data/**

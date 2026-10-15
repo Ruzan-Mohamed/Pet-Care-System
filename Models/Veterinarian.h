@@ -11,8 +11,11 @@ namespace PawCare
         String^ telephone;
         String^ specialization;
 
+        void validateId(int id, String^ fieldName);
+
     public:
         Veterinarian();
+        Veterinarian(int id, String^ vetName, String^ phone, String^ spec);
 
         property int VeterinarianID
         {
@@ -37,5 +40,10 @@ namespace PawCare
             String^ get();
             void set(String^ value);
         }
+
+        String^ displayVeterinarian();
+
+        static bool isValidTelephone(String^ phone);
     };
 }
+

@@ -1,65 +1,76 @@
-PAWCARE - OOP PART 4 FILES
-===========================
+PAWCARE - PET CARE SYSTEM (C++/CLI + MySQL)
+==============================================
 
-This package contains the C++/CLI OOP model classes for the PawCare project.
+PawCare is an Object-Oriented Pet Care and Clinic Management System implemented in
+Visual Studio C++/CLI (.NET Framework / CLR) with MySQL / MariaDB database integration.
 
-IMPORTANT:
-- This is Part 4 only.
-- MySQL connection is NOT implemented yet. That is planned for Part 6.
-- The code is intended for Visual Studio C++/CLI in a CLR Empty Project (.NET Framework).
+FEATURES & OOP PRINCIPLES
+-------------------------
+1. Classes & Objects:
+   - Pet, Dog, Cat, Owner, Veterinarian, Appointment, MedicalRecord, Payment.
+2. Encapsulation & Validation:
+   - Robust property getters/setters.
+   - Guard against negative, NaN, infinity fees, and empty required strings.
+   - Stale total protection: Payment dynamically recalculates totals.
+   - Lifecycle enforcement on Appointments (BOOKED -> CONFIRMED -> COMPLETED / CANCELLED).
+   - Validations for phone numbers (Regex) and email formats.
+3. Inheritance & Polymorphism:
+   - Dog and Cat inherit from base Pet.
+   - Overridden calculateConsultationFee() and displayPetInfo().
+   - Polymorphic method invocation through base Pet^ handles.
+4. Database Integration & Persistence:
+   - Full MySQL ADO.NET integration via MySql.Data connector.
+   - Parameterized SQL queries to prevent SQL injection.
+   - Complete CRUD operations for all entities.
+   - Transactional payment processing and appointment completion.
+   - Veterinarian double-booking prevention.
 
-FILES
------
-Models:
-  Pet.h / Pet.cpp
-  Dog.h / Dog.cpp
-  Cat.h / Cat.cpp
-  Owner.h / Owner.cpp
-  Veterinarian.h / Veterinarian.cpp
-  Appointment.h / Appointment.cpp
-  MedicalRecord.h / MedicalRecord.cpp
-  Payment.h / Payment.cpp
+PROJECT STRUCTURE
+-----------------
+PawCare.sln                 - Visual Studio Solution File
+PawCare.vcxproj             - Visual Studio Project File (CLR .NET Framework 4.8)
+PawCare.vcxproj.filters     - Visual Studio Filters File
+TestMain.cpp                - Entry point: Demonstration, Validation Tests, and DB CRUD
+Models/
+  Pet.h / Pet.cpp           - Base Pet class
+  Dog.h / Dog.cpp           - Dog subclass with specialized fee
+  Cat.h / Cat.cpp           - Cat subclass with specialized fee
+  Owner.h / Owner.cpp       - Pet owner entity with contact validation
+  Veterinarian.h / .cpp     - Veterinarian entity
+  Appointment.h / .cpp      - Appointment lifecycle entity
+  MedicalRecord.h / .cpp    - Medical history and diagnosis
+  Payment.h / .cpp          - Monetary calculations and payment state
+Database/
+  DatabaseManager.h / .cpp  - ADO.NET MySQL database manager with full CRUD
+  pawcare_db.sql            - MySQL schema, tables, foreign keys, and seed data
+packages/
+  MySql.Data/MySql.Data.dll - MySQL Connector/NET ADO.NET library
 
-Database:
-  DatabaseManager.h / DatabaseManager.cpp
+HOW TO RUN IN VISUAL STUDIO
+---------------------------
+1. Open Visual Studio 2022 / 2026.
+2. File -> Open -> Project/Solution -> Select "PawCare.sln".
+3. Ensure the project configuration is set to:
+   - Configuration: Debug or Release
+   - Platform: x64
+4. Ensure the C++/CLI workload and .NET Framework 4.8 targeting pack are installed in VS:
+   - In VS Installer: "Desktop development with C++" -> check "C++/CLI support for v143 build tools".
+5. Build Solution (Ctrl + Shift + B).
+6. Press F5 or Ctrl + F5 to run.
 
-Test:
-  TestMain.cpp
+MYSQL DATABASE SETUP
+--------------------
+1. Start your MySQL or MariaDB server (e.g. via XAMPP, MySQL Workbench, or Windows Service).
+2. Open a MySQL terminal or administration tool:
+   mysql -u root -p < Database/pawcare_db.sql
+3. Verify that the database "pawcare_db" is created with tables:
+   - owners
+   - veterinarians
+   - pets
+   - appointments
+   - medical_records
+   - payments
+4. If your MySQL root user has a password or runs on a non-default port,
+   configure the connection parameters when instantiating DatabaseManager:
+   DatabaseManager^ db = gcnew DatabaseManager("localhost", 3306, "pawcare_db", "root", "your_password");
 
-HOW TO USE
-----------
-1. Open Visual Studio.
-2. Create a CLR Empty Project (.NET Framework), for example: PawCare.
-3. Add the .h and .cpp files to the project using Solution Explorer:
-   Right-click Project -> Add -> Existing Item.
-4. Keep the folders in Solution Explorer if you want, but the #include paths in
-   TestMain.cpp assume the physical folders Models and Database.
-5. If you add the files without folders, change the include paths in TestMain.cpp
-   from "Models/Pet.h" to "Pet.h", etc.
-6. Set TestMain.cpp as the source file containing main().
-7. Project Properties:
-   Linker -> Advanced -> Entry Point = main
-   Linker -> System -> SubSystem = Windows
-8. Build -> Build Solution.
-9. Run.
-
-EXPECTED TEST
--------------
-The console test creates Max (Dog) and Luna (Cat), demonstrates inheritance and
-polymorphism, creates an owner, veterinarian, appointment, medical record and
-payment, and prints their information.
-
-OOP CONCEPTS SHOWN
-------------------
-Class       -> Pet, Dog, Cat, Owner, Appointment, etc.
-Object      -> max, luna, owner, vet, appointment, record, payment
-Encapsulation -> private fields + public properties
-Abstraction -> simple methods hide internal operations
-Inheritance -> Dog and Cat inherit from Pet
-Polymorphism -> Pet reference calls overridden Dog/Cat methods
-
-NOTE
-----
-The consultation fee values in Dog/Cat are demonstration values for showing
-polymorphism. They can be changed later according to your group's agreed clinic
-rules.

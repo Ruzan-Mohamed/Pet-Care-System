@@ -15,8 +15,25 @@ namespace PawCare
         String^ paymentMethod;
         String^ paymentStatus;
 
+        void validateFee(double value, String^ fieldName);
+        void recalculateTotal();
+
     public:
+        // Standard Payment Methods
+        literal String^ METHOD_CASH = "Cash";
+        literal String^ METHOD_CARD = "Card";
+        literal String^ METHOD_BANK_TRANSFER = "Bank Transfer";
+        literal String^ METHOD_ONLINE = "Online";
+
+        // Standard Payment Statuses
+        literal String^ STATUS_PENDING = "PENDING";
+        literal String^ STATUS_PAID = "PAID";
+        literal String^ STATUS_FAILED = "FAILED";
+        literal String^ STATUS_CANCELLED = "CANCELLED";
+        literal String^ STATUS_REFUNDED = "REFUNDED";
+
         Payment();
+        Payment(int id, int apptId, double consultFee, double treatFee, double othFee, String^ method);
 
         property int PaymentID
         {
@@ -48,6 +65,7 @@ namespace PawCare
             void set(double value);
         }
 
+        // Always reflects the rounded sum of consultation, treatment, and other fees
         property double TotalAmount
         {
             double get();
@@ -66,7 +84,13 @@ namespace PawCare
         }
 
         double calculateTotal();
-        void processPayment();
+        bool processPayment();
+        void markFailed();
+        void markRefunded();
         String^ displayPayment();
+
+        static bool isValidMethod(String^ method);
+        static bool isValidStatus(String^ status);
     };
 }
+

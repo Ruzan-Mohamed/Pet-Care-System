@@ -4,7 +4,7 @@ using namespace PawCare;
 
 Cat::Cat() : Pet()
 {
-    PetType = "Cat";
+    petType = "Cat";
 }
 
 Cat::Cat(int id, int owner, String^ petName, String^ petBreed,
@@ -15,10 +15,11 @@ Cat::Cat(int id, int owner, String^ petName, String^ petBreed,
 
 double Cat::calculateConsultationFee()
 {
-    return 1100.00;
+    return CAT_CONSULTATION_FEE;
 }
 
 String^ Cat::displayPetInfo()
 {
     return "[CAT]\r\n" + Pet::displayPetInfo();
 }
+

@@ -12,8 +12,11 @@ namespace PawCare
         String^ email;
         String^ address;
 
+        void validateId(int id, String^ fieldName);
+
     public:
         Owner();
+        Owner(int id, String^ ownerName, String^ phone, String^ ownerEmail, String^ addr);
 
         property int OwnerID
         {
@@ -44,5 +47,11 @@ namespace PawCare
             String^ get();
             void set(String^ value);
         }
+
+        String^ displayOwner();
+
+        static bool isValidTelephone(String^ phone);
+        static bool isValidEmail(String^ emailStr);
     };
 }
+

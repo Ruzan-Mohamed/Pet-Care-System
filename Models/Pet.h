@@ -5,7 +5,7 @@ namespace PawCare
 {
     public ref class Pet
     {
-    private:
+    protected:
         int petID;
         int ownerID;
         String^ name;
@@ -14,7 +14,11 @@ namespace PawCare
         int age;
         String^ gender;
 
+        void validateId(int id, String^ fieldName);
+
     public:
+        literal double BASE_CONSULTATION_FEE = 1000.00;
+
         Pet();
         Pet(int id, int owner, String^ petName, String^ type,
             String^ petBreed, int petAge, String^ petGender);
@@ -37,6 +41,7 @@ namespace PawCare
             void set(String^ value);
         }
 
+        // PetType is read-only or validated to prevent type mismatch
         property String^ PetType
         {
             String^ get();
@@ -63,5 +68,8 @@ namespace PawCare
 
         virtual double calculateConsultationFee();
         virtual String^ displayPetInfo();
+
+        static bool isValidGender(String^ g);
     };
 }
+
